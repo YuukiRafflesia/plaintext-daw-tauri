@@ -10,15 +10,13 @@ fn greet(name: &str) -> String {
 }
 
 #[tauri::command]
-fn syscall_test() -> () {
+fn syscall_test() {
     println!("hello tauri");
-    ()
 }
 
 fn main() {
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![greet])
-        .invoke_handler(tauri::generate_handler![syscall_test])
+        .invoke_handler(tauri::generate_handler![greet, syscall_test])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
