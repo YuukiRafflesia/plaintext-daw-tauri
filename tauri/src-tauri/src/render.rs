@@ -1,24 +1,40 @@
-use std::{fs::File, io::Read, path::Path};
+use std::{fs::File, io::Read, path::Path, process::Command};
 
 use wav::{BitDepth, Header, WAV_FORMAT_PCM};
 
 use crate::project::Project;
 
 #[tauri::command]
-pub fn render_project(path: &str) {
-    println!("Project File Path: {path}");
+pub fn render_project(path: &str, backend: &str) {
+    println!("Project File Directory: {path}");
+    let proj_file_path = Path::new(path).join("song.yml");
 
-    let proj_file = File::open(Path::new(path).join("song.yml"));
+    let proj_file = File::open(&proj_file_path);
     match proj_file {
         Err(e) => eprintln!("Error: Couldn't open project file...\n{e}"),
         Ok(mut f) => {
-            let mut buf = String::new();
-            f.read_to_string(&mut buf).unwrap();
-
-            let proj: Project = serde_yaml::from_str(buf.as_str()).unwrap();
-            println!("Project File Deserialised: {proj:#?}");
-
-            render_to_file(proj, path);
+            match backend {
+                "rs" => {
+                    let mut buf = String::new();
+                    f.read_to_string(&mut buf).unwrap();
+        
+                    let proj: Project = serde_yaml::from_str(buf.as_str()).unwrap();
+                    println!("Project File Deserialised: {proj:#?}");
+        
+                    render_to_file(proj, path);
+                },
+                "py" => {
+                    // TODO: Fix this creating a blank, unclosable window
+                    println!("{:?}",
+                        Command::new("plaintext-daw")
+                            .arg("render")
+                            .arg(&proj_file_path)
+                            .output()
+                            .unwrap()
+                    );
+                },
+                _ => eprintln!("Unrecognised backend: {backend}"),
+            }
         },
     }
 }

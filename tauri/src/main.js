@@ -13,8 +13,8 @@ async function syscall() {
   await invoke('syscall_test', {});
 }
 
-async function renderProject() {
-  await invoke('render_project', { path: projInputEl.value });
+async function renderProject(backend) {
+  await invoke('render_project', { path: projInputEl.value, backend: backend });
 }
 
 window.addEventListener("DOMContentLoaded", () => {
@@ -29,6 +29,9 @@ window.addEventListener("DOMContentLoaded", () => {
     .querySelector("#syscall-button")
     .addEventListener("click", () => syscall());
   document
-    .querySelector("#project-render-button")
-    .addEventListener("click", () => renderProject());
+    .querySelector("#project-render-button-rs")
+    .addEventListener("click", () => renderProject("rs"));
+  document
+    .querySelector("#project-render-button-py")
+    .addEventListener("click", () => renderProject("py"));
 });
