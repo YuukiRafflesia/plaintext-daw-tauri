@@ -3,6 +3,11 @@
     windows_subsystem = "windows"
 )]
 
+use crate::render::render_project;
+
+mod render;
+mod project;
+
 // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
 #[tauri::command]
 fn greet(name: &str) -> String {
@@ -16,7 +21,7 @@ fn syscall_test() {
 
 fn main() {
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![greet, syscall_test])
+        .invoke_handler(tauri::generate_handler![greet, syscall_test, render_project])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
