@@ -3,20 +3,12 @@ use std::collections::BTreeMap;
 use serde::{Serialize, Deserialize};
 
 #[derive(Debug, Serialize, Deserialize)]
-pub enum ProjectPiece {
-    #[serde(rename = "bpm")]
-    Bpm(f32),
-    
-    #[serde(rename = "sample_rate")]
-    SampleRate(u32),
-
-    #[serde(rename = "clips")]
-    Clips(BTreeMap<String, SampleClip>),
-
-    #[serde(rename = "instruments")]
-    Instruments(BTreeMap<String, Instrument>),
-
-    Patterns(BTreeMap<String, PatternClip>),
+pub struct Project {
+    bpm: f32,
+    sample_rate: u32,
+    clips: BTreeMap<String, SampleClip>,
+    instruments: BTreeMap<String, Instrument>,
+    patterns: BTreeMap<String, PatternClip>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]

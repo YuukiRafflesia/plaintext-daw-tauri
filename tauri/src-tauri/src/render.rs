@@ -1,6 +1,6 @@
 use std::{fs::File, io::Read};
 
-use crate::project::ProjectPiece;
+use crate::project::Project;
 
 #[tauri::command]
 pub fn render_project(path: &str) {
@@ -13,13 +13,12 @@ pub fn render_project(path: &str) {
             let mut buf = String::new();
             f.read_to_string(&mut buf).unwrap();
 
-            // TODO: Deserialise buf!
-            let proj: Vec<ProjectPiece> = serde_yaml::from_str(buf.as_str()).unwrap();
+            let proj: Project = serde_yaml::from_str(buf.as_str()).unwrap();
             println!("Project File Deserialised: {proj:#?}");
         },
     }
 }
 
-fn render_to_file(data: Vec<ProjectPiece>) {
+fn render_to_file(data: Project) {
     // TODO: Render to WAV!
 }
