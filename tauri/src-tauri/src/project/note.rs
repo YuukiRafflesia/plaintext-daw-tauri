@@ -8,6 +8,19 @@ pub struct Note {
 }
 
 impl Note {
+    pub fn beats_to_samples(beats: f32, bpm: f32, sample_rate: u32) -> u32 {
+        (beats * (60.0 / bpm)) as u32 * sample_rate
+    }
+
+    pub fn start_sample(&self, bpm: f32, sample_rate: u32) -> u32 {
+        Self::beats_to_samples(self.start, bpm, sample_rate)
+    }
+    
+    pub fn end_sample(&self, bpm: f32, sample_rate: u32) -> u32 {
+        let beat = self.start + self.length;
+        Self::beats_to_samples(beat, bpm, sample_rate)
+    }
+
     pub fn value(&self) -> &str {
         self.value.as_ref()
     }
