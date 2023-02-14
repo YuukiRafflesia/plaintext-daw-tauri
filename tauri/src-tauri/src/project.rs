@@ -4,42 +4,42 @@ use serde::{Serialize, Deserialize};
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Project {
-    bpm: f32,
-    sample_rate: u32,
-    clips: BTreeMap<String, SampleClip>,
-    instruments: BTreeMap<String, Instrument>,
-    patterns: BTreeMap<String, PatternClip>,
+    pub bpm: f32,
+    pub sample_rate: u32,
+    pub clips: BTreeMap<String, SampleClip>,
+    pub instruments: BTreeMap<String, Instrument>,
+    pub patterns: BTreeMap<String, PatternClip>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct SampleClip {
-    path: String,
-    start: f32,
+    pub path: String,
+    pub start: f32,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct InstrumentClip {
-    path: String,
+    pub path: String,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Instrument {
     #[serde(rename = "type")]
-    ty: String,
-    clips: BTreeMap<String, InstrumentClip>,
+    pub ty: String,
+    pub clips: BTreeMap<String, InstrumentClip>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct PatternClip {
-    instrument: String,
-    start: f32,
-    repeat: f32,
-    notes: Vec<Note>,
+    pub instrument: String,
+    pub start: f32,
+    pub repeat: f32,
+    pub notes: Vec<Note>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Note {
-    value: String,
-    start: f32,
-    length: f32,
+    pub value: String,
+    pub start: f32,
+    pub length: f32,
 }
