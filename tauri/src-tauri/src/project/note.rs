@@ -8,15 +8,15 @@ pub struct Note {
 }
 
 impl Note {
-    pub fn beats_to_samples(beats: f32, bpm: f32, sample_rate: u32) -> u32 {
-        (beats * (60.0 / bpm)) as u32 * sample_rate
+    pub fn beats_to_samples(beats: f32, bpm: f32, sample_rate: usize) -> usize {
+        (beats * (60.0 / bpm)) as usize * sample_rate
     }
 
-    pub fn start_sample(&self, bpm: f32, sample_rate: u32) -> u32 {
+    pub fn start_sample(&self, bpm: f32, sample_rate: usize) -> usize {
         Self::beats_to_samples(self.start(), bpm, sample_rate)
     }
     
-    pub fn end_sample(&self, bpm: f32, sample_rate: u32) -> u32 {
+    pub fn end_sample(&self, bpm: f32, sample_rate: usize) -> usize {
         let beat = self.start() + self.length();
         Self::beats_to_samples(beat, bpm, sample_rate)
     }

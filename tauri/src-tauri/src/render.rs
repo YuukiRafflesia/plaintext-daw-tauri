@@ -57,24 +57,23 @@ fn render_to_file(proj: Project, path: &str) {
         let end = note.end_sample(proj.bpm(), proj.sample_rate());
 
         // TODO: Handle these unwraps properly and make sure (idr what I was gonna put here, will write in when I remember)
-        println!("Loading note from path: {}/{}", path, used_notes[note.value()].path());
+        // println!("Loading note from path: {}/{}", path, used_notes[note.value()].path());
         let mut input_note = File::open(Path::new(path).join(used_notes[note.value()].path())).unwrap();
         let (_in_header, data) = wav::read(&mut input_note).unwrap();
 
-        if data.is_eight() {
-            println!("Wav is 8bit int!");
-        } else if data.is_sixteen() {
-            println!("Wav is 16bit int!");
-        } else if data.is_twenty_four() {
-            println!("Wav is 24bit int!");
-        } else if data.is_thirty_two_float() {
-            println!("Wav is 32bit float!");
-        }
+        // if data.is_eight() {
+        //     println!("Wav is 8bit int!");
+        // } else if data.is_sixteen() {
+        //     println!("Wav is 16bit int!");
+        // } else if data.is_twenty_four() {
+        //     println!("Wav is 24bit int!");
+        // } else if data.is_thirty_two_float() {
+        //     println!("Wav is 32bit float!");
+        // }
 
         // TODO: Check for clip endings and make it end there if needs be
         
-        // TODO: Extend the vec with each note!
-        song_data.extend_from_slice(data.as_sixteen().unwrap());
+        song_data.extend_from_slice(&data.as_sixteen().unwrap()[..(end - start)]);
     }
 
     println!("Song completed! Just rendering now...");
@@ -82,7 +81,7 @@ fn render_to_file(proj: Project, path: &str) {
     let out_header = Header::new(
         WAV_FORMAT_PCM,
         1,
-        proj.sample_rate(),
+        proj.sample_rate() as u32,
         16,
     );
 

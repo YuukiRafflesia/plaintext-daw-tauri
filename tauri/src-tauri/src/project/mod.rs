@@ -12,7 +12,7 @@ use self::{clip::SampleClip, instrument::Instrument, pattern::PatternClip};
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Project {
     bpm: f32,
-    sample_rate: u32,
+    sample_rate: usize,
     clips: BTreeMap<String, SampleClip>,
     instruments: BTreeMap<String, Instrument>,
     patterns: BTreeMap<String, PatternClip>,
@@ -23,7 +23,7 @@ impl Project {
         self.bpm
     }
 
-    pub fn sample_rate(&self) -> u32 {
+    pub fn sample_rate(&self) -> usize {
         self.sample_rate
     }
 
