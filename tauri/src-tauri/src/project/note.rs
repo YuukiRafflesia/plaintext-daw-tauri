@@ -13,11 +13,11 @@ impl Note {
     }
 
     pub fn start_sample(&self, bpm: f32, sample_rate: u32) -> u32 {
-        Self::beats_to_samples(self.start, bpm, sample_rate)
+        Self::beats_to_samples(self.start(), bpm, sample_rate)
     }
     
     pub fn end_sample(&self, bpm: f32, sample_rate: u32) -> u32 {
-        let beat = self.start + self.length;
+        let beat = self.start() + self.length();
         Self::beats_to_samples(beat, bpm, sample_rate)
     }
 
